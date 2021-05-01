@@ -1,8 +1,8 @@
 import { useState } from "react"
 import "./Todo.css"
-import List from "./List"
-import FormList from "./FormList"
-import Item from "./Item"
+import List from "./components/List"
+import FormList from "./components/FormList"
+import Item from "./components/Item"
 
 function Todo() {
   const [itens, setItens] = useState([])
