@@ -1,11 +1,24 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import "./Todo.css"
 import List from "./components/List"
 import FormList from "./components/FormList"
 import Item from "./components/Item"
 
+const SAVED_ITENS = "savedItens"
+
 function Todo() {
   const [itens, setItens] = useState([])
+
+  useEffect(() => {
+    let savedItens = JSON.parse(localStorage.getItem(SAVED_ITENS))
+    if(savedItens) {
+      setItens(savedItens)
+    }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem(SAVED_ITENS, JSON.stringify(itens))
+  }, [itens])
   
   function onAddItem(texto) {
     const item = new Item(texto)
