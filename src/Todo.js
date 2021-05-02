@@ -3,11 +3,15 @@ import "./Todo.css"
 import List from "./components/List"
 import FormList from "./components/FormList"
 import Item from "./components/Item"
+import Modal from "./components/Modal"
 
 const SAVED_ITENS = "savedItens"
 
 function Todo() {
   const [itens, setItens] = useState([])
+
+  const [showModal, setShowModal] = useState(false)
+
 
   useEffect(() => {
     let savedItens = JSON.parse(localStorage.getItem(SAVED_ITENS))
@@ -22,8 +26,9 @@ function Todo() {
   
   function onAddItem(texto) {
     const item = new Item(texto)
+
     setItens([...itens, item])
-    
+    onHideModal()
   }
 
   function doneListzim(item) {
@@ -42,11 +47,17 @@ function Todo() {
     setItens(filterList)
   }
 
+  function onHideModal(e) {
+    setShowModal(false)
+  }
+
   return (
     <div className="container">
-      <h1>Todo React</h1>
-      <FormList addItem={onAddItem}> </FormList>
+      <header className="header"><h1>Todo React</h1> <button onClick={()=> { setShowModal(true)}} className="addButton">+</button></header>
       <List OnClickProps={doneListzim} onDeleteList={onDeleteList} itens={itens} ></List>
+      <Modal show={showModal} onHideModal={onHideModal}>
+        <FormList addItem={onAddItem}> </FormList>
+      </Modal>
     </div>
   )
 }
